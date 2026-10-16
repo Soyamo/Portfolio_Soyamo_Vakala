@@ -90,7 +90,7 @@ const PROJECTS = [
   {
     id: "hardware-platform",
     name: "Hardware Store Commerce Platform",
-    tag: "E-Commerce",
+    tag: "E-commerce",
     status: "building",
     summary:
       "Reusable e-commerce platform concept for independent hardware and building-material stores.",
