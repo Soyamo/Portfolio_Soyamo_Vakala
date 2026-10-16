@@ -667,7 +667,7 @@ export default function Portfolio() {
   const GITHUB = "https://github.com/Soyamo";
   const LINKEDIN = "https://linkedin.com/in/svakala";
 
-  const CV_LINK = `${import.meta.env.BASE_URL}Resume_Soyamo_Vakala.pdf`;
+  const CV_LINK = `${import.meta.env.BASE_URL}Resume_Soyamo.pdf`;
   const PHOTO_SRC = `${import.meta.env.BASE_URL}profile.jpeg`;
   const LOGO_SRC = `${import.meta.env.BASE_URL}sv.svg`;
 
