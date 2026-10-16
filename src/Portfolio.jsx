@@ -6,7 +6,7 @@ const PROJECTS = [
     id: "deepguard",
     featured: true,
     name: "DeepGuard",
-    tag: "AI / SECURITY",
+    tag: "Deepfake Detection",
     status: "in progress",
     summary:
       "AI-powered web application for image and video deepfake detection with frame-level explainability.",
@@ -63,7 +63,7 @@ const PROJECTS = [
   {
     id: "algotrader",
     name: "AlgoTrader",
-    tag: "ALGO TRADING",
+    tag: "Algorithmic Trading",
     status: "in progress",
     summary:
       "Python algorithmic trading bot for micro index CFDs with walk-forward backtesting, SMC pattern diagnostics and live MT5 execution.",
@@ -90,7 +90,7 @@ const PROJECTS = [
   {
     id: "hardware-platform",
     name: "Hardware Store Commerce Platform",
-    tag: "FULL STACK",
+    tag: "E-Commerce",
     status: "building",
     summary:
       "Reusable e-commerce platform concept for independent hardware and building-material stores.",
@@ -111,33 +111,13 @@ const PROJECTS = [
       "Designing the reusable architecture, database model, product catalogue, reservation workflow and customer-facing interface.",
     decisions:
       "PostgreSQL provides a strong relational foundation for products, stock, orders, customers and store operations.",
-    github: "https://github.com/Soyamo",
-    demo: null,
-  },
-  {
-    id: "starlight-hotel",
-    name: "Starlight Hotel Database",
-    tag: "DATABASE DESIGN",
-    status: "shipped",
-    summary:
-      "Relational database for hotel operations covering reservations, guests and rooms.",
-    detail:
-      "Applied the Database Lifecycle methodology from requirements analysis through deployment. The database was normalised to 3NF and query performance was improved through strategic indexing.",
-    stack: ["Oracle SQL Developer", "SQL", "3NF", "Database Design"],
-    metric: "40% faster queries",
-    problem:
-      "The hotel needed a structured relational system capable of managing guests, rooms and reservations while maintaining data integrity.",
-    contribution:
-      "Designed the relational schema, normalised the data model, created constraints and implemented indexing strategies.",
-    decisions:
-      "Normalising the schema to 3NF reduced unnecessary duplication while indexes improved the performance of frequently accessed queries.",
-    github: "https://github.com/Soyamo",
+    github: "https://github.com/Soyamo/hardware-store-platform",
     demo: null,
   },
   {
     id: "museum-ticket",
     name: "Museum Ticket System",
-    tag: "DESKTOP APP",
+    tag: "Ticket Management",
     status: "shipped",
     summary:
       "C# desktop application for managing museum visitors and ticket sales.",
@@ -306,16 +286,23 @@ function HeroScene({ darkMode }) {
     const mount = mountRef.current;
     if (!mount) return;
 
-    const width = mount.clientWidth || window.innerWidth;
-    const height = mount.clientHeight || window.innerHeight;
+    const width = Math.max(mount.clientWidth, 1);
+    const height = Math.max(mount.clientHeight, 1);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0, 7);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height, false);
+    Object.assign(renderer.domElement.style, {
+      position: "absolute",
+      inset: "0",
+      width: "100%",
+      height: "100%",
+      display: "block",
+    });
 
     mount.appendChild(renderer.domElement);
 
@@ -590,23 +577,26 @@ function HeroScene({ darkMode }) {
     animate();
 
     const handleResize = () => {
-      const w = mount.clientWidth || window.innerWidth;
-      const h = mount.clientHeight || window.innerHeight;
+      const w = mount.clientWidth;
+      const h = mount.clientHeight;
 
       if (w > 0 && h > 0) {
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
+        renderer.setSize(w, h, false);
       }
     };
 
-    // Ensure size calculation is correct on immediate load
+    // Follow layout changes, including those caused by fonts loading.
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(mount);
     handleResize();
 
     window.addEventListener("resize", handleResize);
 
     return () => {
       cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
       window.removeEventListener("resize", handleResize);
       mount.removeEventListener("mousemove", handleMouseMove);
 
@@ -641,7 +631,6 @@ function HeroScene({ darkMode }) {
         position: "relative",
         overflow: "hidden",
         width: "100%",
-        height: "100%",
       }}
     />
   );
@@ -977,8 +966,8 @@ export default function Portfolio() {
 
         .pf-hero-canvas {
           width: 100%;
-          height: 100%;
-          min-height: 480px;
+          height: 480px;
+          min-width: 0;
         }
 
         /* IMPACT */
@@ -1675,7 +1664,7 @@ export default function Portfolio() {
           <div className="pf-hero-content">
             <div className="pf-status-line pf-mono">
               <StatusDot status="shipped" />
-              AVAILABLE · SOFTWARE ENGINEER / DATA ENGINEER · SOUTH AFRICA
+              AVAILABLE · SOFTWARE DEV ENGINEER / DATA ENGINEER · SOUTH AFRICA
             </div>
 
             <h1>
@@ -1721,13 +1710,6 @@ export default function Portfolio() {
                   <CountUp target={65} suffix="%" />
                 </span>
                 <span className="pf-impact-label">Faster deployment time</span>
-              </Reveal>
-
-              <Reveal className="pf-impact-card">
-                <span className="pf-impact-number">
-                  <CountUp target={40} suffix="%" />
-                </span>
-                <span className="pf-impact-label">Faster database queries</span>
               </Reveal>
 
               <Reveal className="pf-impact-card">

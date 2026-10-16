@@ -40,8 +40,8 @@ Expected address for the Soyamo account: https://soyamo.github.io/Portfolio_Soya
 ## Content review
 
 - Project case studies explain the problem, contribution and technical decisions well.
-- Add benchmark methodology or evidence for 92% accuracy, 65% faster deployments and 40% faster queries.
-- Replace profile links for the hardware platform and hotel database with specific repositories when available.
+- Add benchmark methodology or evidence for 92% accuracy and 65% faster deployments.
+- Replace profile links for the hardware platform with specific repositories when available.
 - Add live demos, screenshots or recorded walkthroughs so visitors can assess the work.
 - All current project demo URLs are empty.
 
